@@ -1,0 +1,13 @@
+{
+  "recommendations": [
+    // C# / .NET 必須
+    "ms-dotnettools.csharp",
+    "ms-dotnettools.csdevkit",
+    // Avalonia
+    "avaloniateam.vscode-avalonia",
+    // コード品質
+    "editorconfig.editorconfig",
+    // Git
+    "mhutchie.git-graph"
+  ]
+}
