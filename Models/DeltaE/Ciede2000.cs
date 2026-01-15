@@ -92,7 +92,9 @@ public static class Ciede2000
 
     private static double ComputeDeltaHPrime(double c1Prime, double c2Prime, double h1Prime, double h2Prime)
     {
-        if (c1Prime * c2Prime == 0)
+        // 非常に小さいchroma値は0として扱う（浮動小数点の丸め誤差による不安定性を回避）
+        const double epsilon = 1e-10;
+        if (c1Prime < epsilon || c2Prime < epsilon)
             return 0.0;
 
         double dhPrime = h2Prime - h1Prime;
@@ -107,7 +109,9 @@ public static class Ciede2000
 
     private static double ComputeHBarPrime(double c1Prime, double c2Prime, double h1Prime, double h2Prime)
     {
-        if (c1Prime * c2Prime == 0)
+        // 非常に小さいchroma値は0として扱う（浮動小数点の丸め誤差による不安定性を回避）
+        const double epsilon = 1e-10;
+        if (c1Prime < epsilon || c2Prime < epsilon)
             return h1Prime + h2Prime;
 
         double hSum = h1Prime + h2Prime;
