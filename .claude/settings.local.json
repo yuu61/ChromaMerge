@@ -1,7 +1,13 @@
 {
   "permissions": {
     "allow": [
-      "Skill(ultrathink)"
+      "Skill(ultrathink)",
+      "Bash(git -C \"C:\\\\repository\\\\ChromaMerge\" log --oneline)",
+      "Bash(dotnet new:*)",
+      "Bash(dotnet add:*)",
+      "Bash(dotnet sln:*)",
+      "Bash(dotnet test:*)",
+      "Bash(dotnet build:*)"
     ]
   }
 }
