@@ -68,6 +68,16 @@ Windows, macOS, Linux
 
 UI デザイン用途では **2.0〜3.0** が実用的な初期値です。
 
+## Development Status
+
+| Phase | Status | Description |
+|-------|--------|-------------|
+| Phase 1: Core Models | Done | ColorCode, LabColor, ColorConverter, Ciede2000, UnionFind |
+| Phase 2: Scanning | - | FileScanner, ColorExtractor |
+| Phase 3: Grouping | - | ColorGrouper |
+| Phase 4: UI | - | MainWindow, ViewModels |
+| Phase 5: Merge | - | MergePreview, FileMerger |
+
 ## Build & Run
 
 ### Requirements
@@ -78,6 +88,14 @@ UI デザイン用途では **2.0〜3.0** が実用的な初期値です。
 ```bash
 dotnet run
 ```
+
+### Run Tests
+
+```bash
+dotnet test
+```
+
+115 tests including official CIEDE2000 test dataset (34 pairs).
 
 ### Build (Release)
 

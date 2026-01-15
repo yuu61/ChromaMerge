@@ -10,6 +10,8 @@
   <ItemGroup>
     <Folder Include="Models\" />
     <AvaloniaResource Include="Assets\**" />
+    <Compile Remove="ChromaMerge.Tests\**" />
+    <None Remove="ChromaMerge.Tests\**" />
   </ItemGroup>
 
   <ItemGroup>

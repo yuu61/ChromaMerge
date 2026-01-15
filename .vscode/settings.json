@@ -15,7 +15,10 @@
         "editor.defaultFormatter": "ms-dotnettools.csharp",
         "editor.formatOnSave": true,
         "editor.tabSize": 4,
-        "editor.insertSpaces": true
+        "editor.insertSpaces": true,
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": "explicit"
+        }
     },
 
     // AXAML (Avalonia XAML)
@@ -57,5 +60,15 @@
     "files.watcherExclude": {
         "**/bin/**": true,
         "**/obj/**": true
-    }
+    },
+
+    // .NET 開発支援
+    "dotnet.completion.showCompletionItemsFromUnimportedNamespaces": true,
+    "csharp.inlayHints.enableInlayHintsForParameters": true,
+    "csharp.inlayHints.enableInlayHintsForLiteralParameters": true,
+    "csharp.inlayHints.enableInlayHintsForObjectCreationParameters": true,
+
+    // ブラケットペア
+    "editor.bracketPairColorization.enabled": true,
+    "editor.guides.bracketPairs": "active"
 }

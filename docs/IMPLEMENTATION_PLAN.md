@@ -7,8 +7,16 @@ GUIで確認・マージできるAvalonia製デスクトップアプリケーシ
 
 ### 1.1 現状
 
-- Avalonia 11.3.9 + CommunityToolkit.Mvvm 8.2.1 のMVVMテンプレート初期状態
-- Models/ViewModels/Views の基本構造のみ
+- Avalonia 11.3.9 + CommunityToolkit.Mvvm 8.2.1 のMVVMテンプレート
+- **Phase 1 (Core Models) 完了**
+  - `ColorCode` - カラーコード表現（#RGB, #RGBA, #RRGGBB, #RRGGBBAA 対応）
+  - `LabColor` - CIE L*a*b* 色空間表現
+  - `ColorConverter` - RGB ↔ Lab 変換（D65 標準光源）
+  - `Ciede2000` - CIEDE2000 色差計算（公式テストデータ 34 ペア検証済み）
+  - `UnionFind` - Union-Find データ構造（経路圧縮・ランク最適化）
+- **テスト環境構築済み**
+  - xUnit + FluentAssertions
+  - 115 テストケース（全て合格）
 
 ### 1.2 目標機能（v0）
 
@@ -391,22 +399,30 @@ for (int i = 0; i < colors.Count; i++)
 
 ## 5. テスト戦略
 
-### 5.1 ユニットテスト
+### 5.1 テスト環境
 
-| 対象 | テスト内容 |
-|------|------------|
-| `ColorConverter` | RGB→Lab変換の精度（既知の値と比較） |
-| `Ciede2000` | 公開テストデータセットとの照合 |
-| `ColorExtractor` | 各フォーマットの抽出精度 |
-| `UnionFind` | Union/Find/グループ化の正確性 |
+- **フレームワーク**: xUnit
+- **アサーション**: FluentAssertions
+- **プロジェクト**: `ChromaMerge.Tests/`
 
-### 5.2 CIEDE2000テストデータ
+### 5.2 ユニットテスト
+
+| 対象 | テスト内容 | 状態 |
+|------|------------|------|
+| `ColorCode` | パース、正規化、等価性、null処理 | 35 tests |
+| `ColorConverter` | RGB→Lab変換の精度、境界値、グレースケール | 14 tests |
+| `Ciede2000` | 公開テストデータセットとの照合 | 37 tests |
+| `UnionFind` | Union/Find/グループ化、コンストラクタ境界 | 17 tests |
+| `Integration` | E2Eフロー、色グルーピングシミュレーション | 12 tests |
+| `ColorExtractor` | 各フォーマットの抽出精度 | 未実装 |
+
+### 5.3 CIEDE2000テストデータ
 
 参照: http://www2.ece.rochester.edu/~gsharma/ciede2000/
 
-公式テストデータセット（34ペア）を使用して精度検証
+公式テストデータセット（34ペア）を使用して精度検証 → **検証完了**
 
-### 5.3 統合テスト
+### 5.4 統合テスト
 
 - サンプルCSSファイルセットでのE2Eテスト
 - マージ前後のファイル内容検証
@@ -438,29 +454,30 @@ for (int i = 0; i < colors.Count; i++)
 
 ---
 
-## 7. 実装順序（推奨）
+## 7. 実装順序
 
 ```
-Week 1: Phase 1 (Core Models)
-  ├── ColorCode, LabColor, ColorOccurrence
-  ├── ColorConverter (RGB↔Lab)
-  ├── Ciede2000
-  └── UnionFind
+[x] Phase 1 (Core Models) ← 完了
+  ├── [x] ColorCode, LabColor
+  ├── [x] ColorConverter (RGB↔Lab)
+  ├── [x] Ciede2000 (公式テストデータ検証済み)
+  └── [x] UnionFind (経路圧縮・ランク最適化)
 
-Week 2: Phase 2-3 (Scanning + Grouping)
-  ├── FileScanner
-  ├── ColorExtractor
-  └── ColorGrouper
+[ ] Phase 2-3 (Scanning + Grouping)
+  ├── [ ] FileScanner
+  ├── [ ] ColorExtractor
+  ├── [ ] ColorOccurrence
+  └── [ ] ColorGrouper
 
-Week 3: Phase 4 (UI)
-  ├── MainWindow レイアウト
-  ├── ViewModels
-  └── データバインディング
+[ ] Phase 4 (UI)
+  ├── [ ] MainWindow レイアウト
+  ├── [ ] ViewModels
+  └── [ ] データバインディング
 
-Week 4: Phase 5 (Merge + Polish)
-  ├── MergePreview
-  ├── FileMerger
-  └── テスト・バグ修正
+[ ] Phase 5 (Merge + Polish)
+  ├── [ ] MergePreview
+  ├── [ ] FileMerger
+  └── [ ] E2E テスト
 ```
 
 ---
